@@ -39,7 +39,16 @@ export const useDesignerStore = create((set, get) => ({
 
   // Layers list (mirrored from fabric canvas)
   layers: [],
-  setLayers: (layers) => set({ layers }),
+  setLayers: (newLayers) => {
+    const current = get().layers
+    if (
+      current.length === newLayers.length &&
+      current.every((item, idx) => item === newLayers[idx])
+    ) {
+      return
+    }
+    set({ layers: newLayers })
+  },
 
   // Undo/redo history stacks
   historyStack: [],
@@ -83,8 +92,12 @@ export const useDesignerStore = create((set, get) => ({
   clearCanvas: () => {
     const { fabricCanvas } = get()
     if (!fabricCanvas) return
-    const toRemove = fabricCanvas.getObjects().filter(o => o._type !== 'shirt' && o._type !== 'printArea')
-    toRemove.forEach(o => fabricCanvas.remove(o))
+    const toRemove = fabricCanvas
+      .getObjects()
+      .filter((o) => o._type !== 'shirt' && o._type !== 'printArea' && o._type !== 'grid')
+    toRemove.forEach((o) => fabricCanvas.remove(o))
+    fabricCanvas.discardActiveObject()
     fabricCanvas.renderAll()
+    set({ selectedObject: null, layers: [] })
   },
 }))

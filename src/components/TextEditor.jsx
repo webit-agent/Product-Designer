@@ -165,15 +165,19 @@ export default function TextEditor() {
         </select>
       </div>
 
-      {/* Size + Spacing */}
-      <div className="grid grid-cols-2 gap-3">
+      {/* Size + Spacing + Line Height */}
+      <div className="grid grid-cols-3 gap-2">
         <div className="space-y-1">
-          <label className="text-xs text-gray-500">Size: {size}px</label>
+          <label className="text-[11px] text-gray-500">Size: {size}</label>
           <input type="range" min={8} max={150} value={size} onChange={(e) => setSize(Number(e.target.value))} className="w-full accent-indigo-500" />
         </div>
         <div className="space-y-1">
-          <label className="text-xs text-gray-500">Spacing: {letterSpacing}</label>
+          <label className="text-[11px] text-gray-500">Space: {letterSpacing}</label>
           <input type="range" min={-5} max={30} value={letterSpacing} onChange={(e) => setLetterSpacing(Number(e.target.value))} className="w-full accent-indigo-500" />
+        </div>
+        <div className="space-y-1">
+          <label className="text-[11px] text-gray-500">Height: {lineHeight}</label>
+          <input type="range" min={0.8} max={2.5} step={0.1} value={lineHeight} onChange={(e) => setLineHeight(Number(e.target.value))} className="w-full accent-indigo-500" />
         </div>
       </div>
 
