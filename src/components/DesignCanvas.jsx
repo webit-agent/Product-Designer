@@ -129,8 +129,7 @@ export default function DesignCanvas() {
     if (!canvas) return
     const dims = CANVAS_DIMS[type] || CANVAS_DIMS.tshirt
     const pa = PRINT_AREAS[type] || PRINT_AREAS.tshirt
-    canvas.setWidth(dims.width)
-    canvas.setHeight(dims.height)
+    canvas.setDimensions({ width: dims.width, height: dims.height })
 
     if (printAreaRef.current) {
       canvas.remove(printAreaRef.current)
@@ -311,8 +310,9 @@ export default function DesignCanvas() {
     if (!canvas || !isMountedRef.current) return
     canvas.setZoom(zoom)
     const dims = CANVAS_DIMS[mockupType] || CANVAS_DIMS.tshirt
-    canvas.setWidth(dims.width * zoom)
-    canvas.setHeight(dims.height * zoom)
+    const scaledWidth = dims.width * zoom
+    const scaledHeight = dims.height * zoom
+    canvas.setDimensions({ width: scaledWidth, height: scaledHeight })
     canvas.renderAll()
   }, [zoom, mockupType])
 
